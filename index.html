@@ -52,7 +52,7 @@
   <footer class="footer">本工具為前期評估輔助，不構成建築、估價或法律專業意見。土地開發仍應由建築師、技師及主管機關依個案確認。</footer>
 
   <script>
-    const $=id=>document.getElementById(id);const localApi=['keelung-land-use-checker.sillyape8.chatgpt.site','127.0.0.1','localhost'].includes(location.hostname);const API_BASE=localApi?'':'https://keelung-land-use-checker.sillyape8.chatgpt.site';if(!localApi){$('localBanner').style.display='block'}
+    const $=id=>document.getElementById(id);const localApi=['keelung-land-use-checker.masmorning.chatgpt.site','127.0.0.1','localhost'].includes(location.hostname);const API_BASE=localApi?'':'https://keelung-land-use-checker.masmorning.chatgpt.site';if(!localApi){$('localBanner').style.display='block'}
     const n=id=>Number($(id).value)||0;const fmt=(value,digits=0)=>new Intl.NumberFormat('zh-TW',{maximumFractionDigits:digits}).format(Number.isFinite(value)?value:0);
     function showMessage(text){$('message').textContent=text;$('message').style.display=text?'block':'none'}
     let lookupMode='parcel';function setLookupMode(mode){lookupMode=mode;const parcel=mode==='parcel';$('parcelMode').classList.toggle('active',parcel);$('addressMode').classList.toggle('active',!parcel);$('parcelFields').classList.toggle('hidden',!parcel);$('addressFields').classList.toggle('hidden',parcel);['district','sectionCode','parcel'].forEach(id=>$(id).required=parcel);$('address').required=!parcel;$('emptyHint').textContent=parcel?'選擇行政區、地段並輸入地號':'輸入完整基隆市門牌地址';showMessage('');$('searchButton').textContent='⌕　查詢土地使用分區'}$('parcelMode').addEventListener('click',()=>setLookupMode('parcel'));$('addressMode').addEventListener('click',()=>setLookupMode('address'));
