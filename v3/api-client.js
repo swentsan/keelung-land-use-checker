@@ -5,7 +5,7 @@
   const loadRegistry = () => registry ||= fetch(new URL('./rules.json',location.href)).then(r=>{if(!r.ok)throw Error('規則庫讀取失敗');return r.json()});
   const reply = obj => new Response(JSON.stringify(obj),{headers:{'Content-Type':'application/json; charset=utf-8'}});
   window.apiURL = path => configured ? base+path : '';
-  window.apiFetch = async path => {
+  window.apiFetch = async (path, options = {}) => {
     const url = new URL(path,location.origin);
     if(url.pathname === '/api/catalog') {
       const data=await loadRegistry(),plans=Object.values(data.plans);
@@ -13,7 +13,8 @@
     }
     if(url.pathname === '/api/rules') {const data=await loadRegistry(),rule=data.plans[url.searchParams.get('id')];return rule?reply(rule):new Response('{}',{status:404})}
     if(!configured) throw Error('即時查詢服務尚未啟用；目前可使用土管規則庫與財務試算。');
-    return fetch(base+path,{signal:AbortSignal.timeout(180000)});
+    const deadline=AbortSignal.timeout(180000);
+    return fetch(base+path,{signal:options.signal?AbortSignal.any([options.signal,deadline]):deadline});
   };
   document.addEventListener('DOMContentLoaded', async()=>{
     const status=document.getElementById('serviceState');

@@ -1,0 +1,11 @@
+import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
+const root=new URL('../',import.meta.url);
+const [rules,engineSource,apiSource]=await Promise.all(['lib/rules.json','lib/engine.js','lib/api.js'].map(p=>readFile(new URL(p,root),'utf8')));
+const strip=s=>s.replace(/^import .*;\r?\n/gm,'').replace(/^export /gm,'');
+const names='REGISTRY,PLANS,GEO,collection,zoneKey,excluded,selectRule,assign,difference,spatialOverrides,aggregate,envelopes,segmentDistance,matchRoadName,resolve,bonusEnvelopes';
+const bundle='// Generated from lib/; official rule registry is embedded.\nconst registry='+rules+';\n'+strip(engineSource)+'\nconst engine={'+names+'};\n'+strip(apiSource)+'\nexport default { fetch: handleRequest };\n';
+await mkdir(new URL('worker/',root),{recursive:true});
+await writeFile(new URL('worker/index.js',root),bundle);
+await mkdir(new URL('dist/server/',root),{recursive:true});await mkdir(new URL('dist/.openai/',root),{recursive:true});
+await copyFile(new URL('worker/index.js',root),new URL('dist/server/index.js',root));await copyFile(new URL('.openai/hosting.json',root),new URL('dist/.openai/hosting.json',root));
+console.log('Built embedded API Worker ('+Buffer.byteLength(bundle)+' bytes)');
