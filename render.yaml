@@ -1,0 +1,13 @@
+# Optional hosting blueprint. Adding this file does not create a service.
+services:
+  - type: web
+    name: keelung-assessment-v3-api
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: python -m compileall -q app
+    startCommand: python app/hosted_server.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: ALLOWED_ORIGINS
+        value: https://swentsan.github.io

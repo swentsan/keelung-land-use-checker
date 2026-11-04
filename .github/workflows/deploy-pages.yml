@@ -27,6 +27,7 @@ jobs:
         run: |
           mkdir -p _site
           cp "public/基隆土管查詢.html" _site/index.html
+          cp -R v3 _site/v3
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5

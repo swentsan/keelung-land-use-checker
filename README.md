@@ -1,18 +1,10 @@
-# 基隆市土地使用管制查詢
+# 基隆土地查詢與建案評估
 
-單一 HTML 版本的基隆市土地使用管制查詢與建案初步評估工具。
+- [v3 評估頁](https://swentsan.github.io/keelung-land-use-checker/v3/)：土管規則庫、退縮條文及完整財務試算。
+- [既有簡易查詢頁](https://swentsan.github.io/keelung-land-use-checker/)：保留原版。
+- `app/`：完整 v3 Python 自動查詢、幾何分析與規則引擎，維持原本官方資料配對。
+- [發布與使用](docs/發布與使用.md)：後端部署及地號測試說明。
 
-## 線上使用
+**目前 v3 即時地號查詢及套繪尚未啟用雲端後端。** GitHub Pages 僅提供靜態網頁；規則庫與完整財務試算可直接使用。`render.yaml` 已備妥但尚未部署，並未建立付費服務。後端上線後設定 `v3/api-config.js` 才會啟用查詢。
 
-- GitHub Pages：https://swentsan.github.io/keelung-land-use-checker/
-- 完整查詢站：https://keelung-land-use-checker.sillyape8.chatgpt.site/
-
-## 內容
-
-- `index.html`：GitHub Pages 首頁
-- `public/基隆土管查詢.html`：可獨立下載、離線開啟的 HTML
-- `.github/workflows/deploy-pages.yml`：GitHub Pages 自動部署流程
-
-## 注意事項
-
-GitHub Pages 是純靜態網站，建案試算可直接使用；需要伺服器端法規查詢功能時，頁面會引導至完整查詢站。查詢結果僅供初步評估，實際開發條件仍應以主管機關核定資料為準。
+規則庫核對日 2026-11-02，57 組含數值計畫、408 筆數值規則、64 個圖台細計範圍。未確認的規則保留待核對，候選包絡不等於正式可建範圍。僅公開程式與官方規則資料，不含私人個案與憑證。
